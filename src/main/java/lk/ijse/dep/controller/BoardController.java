@@ -16,7 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import lk.ijse.dep.service.*;
 
-public class BoardController implements BoardUI {
+public class BoardController implements BoardUI{
 
     private static final int RADIUS = 42;
 

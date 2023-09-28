@@ -12,6 +12,21 @@ public class Winner {
 
     private int row2;
 
+    public Winner(Piece winningPiece){
+        col1 = -1;
+        col2 = -1;
+        row1 = -1;
+        row2 = -1;
+    }
+
+    public Winner(Piece winningPiece, int col1, int row1, int col2, int row2){
+        this.winningPiece = winningPiece;
+        this.col1 = col1;
+        this.row1 = row1;
+        this.col2 = col2;
+        this.row2 = row2;
+    }
+
     public Piece getWinningPiece() {
         return winningPiece;
     }
