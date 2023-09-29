@@ -1,8 +1,5 @@
 package lk.ijse.dep.service;
 
-import static lk.ijse.dep.service.Board.NUM_OF_COLS;
-import static lk.ijse.dep.service.Board.NUM_OF_ROWS;
-
 public class BoardImpl implements Board {
     private Piece[][] pieces;
 
@@ -10,9 +7,10 @@ public class BoardImpl implements Board {
 
     public BoardImpl(BoardUI boardUI) {
         pieces = new Piece[NUM_OF_COLS][NUM_OF_ROWS];
+        this.boardUI = boardUI;
 
         for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces[i].length; j++) {
+            for (int j = 0 ; j < pieces[i].length; j++) {
                 pieces[i][j] = Piece.EMPTY;
             }
         }
@@ -89,7 +87,7 @@ public class BoardImpl implements Board {
 
 
         for (int i = 0; i < pieces[i].length; i++) {
-            for (int j = 0; j < pieces.length; j++) {
+            for (int j = 0; j < pieces.length - 3; j++) {
                 Piece currentPiece = pieces[j][i];
                 if (currentPiece.equals(pieces[j + 1][i]) && currentPiece.equals(pieces[j + 2][i]) && currentPiece.equals(pieces[j + 3][i])) {
                     winningPiece = currentPiece;
@@ -100,7 +98,6 @@ public class BoardImpl implements Board {
                 }
             }
         }
-
         return new Winner(winningPiece, col1, row1, col2, row2);
     }
 }
