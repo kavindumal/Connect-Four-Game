@@ -13,6 +13,7 @@ public class Winner {
     private int row2;
 
     public Winner(Piece winningPiece){
+        this.winningPiece=winningPiece;
         col1 = -1;
         col2 = -1;
         row1 = -1;

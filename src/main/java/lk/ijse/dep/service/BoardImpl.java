@@ -70,7 +70,7 @@ public class BoardImpl implements Board {
         Piece winningPiece = Piece.EMPTY;
 
         for (int i = 0; i < NUM_OF_COLS; i++) {
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < NUM_OF_ROWS - 3; j++) {
                 if (pieces[i][j] == pieces[i][j + 1] && pieces[i][j + 1] == pieces[i][j + 2] && pieces[i][j + 2] == pieces[i][j + 3]) {
                     if (pieces[i][j] != Piece.EMPTY) {
                         System.out.println(i + " " + j);
@@ -79,7 +79,7 @@ public class BoardImpl implements Board {
                         row1 = j;
                         col2 = i;
                         row2 = j + 3;
-                        break;
+                        return new Winner(winningPiece, col1, row1, col2, row2);
                     }
                 }
             }
@@ -87,7 +87,7 @@ public class BoardImpl implements Board {
 
 
         for (int i = 0; i < NUM_OF_ROWS; i++) {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < NUM_OF_COLS - 3; j++) {
                 if (pieces[j][i] == pieces[j + 1][i] && pieces[j + 1][i] == pieces[j + 2][i] && pieces[j + 2][i] == pieces[j + 3][i]) {
                     if (pieces[j][i] != Piece.EMPTY) {
                         System.out.println("paka22");
@@ -96,11 +96,11 @@ public class BoardImpl implements Board {
                         row1 = i;
                         col2 = j + 3;
                         row2 = i;
-                        break;
+                        return new Winner(winningPiece, col1, row1, col2, row2);
                     }
                 }
             }
         }
-        return new Winner(winningPiece, col1, row1, col2, row2);
+        return new Winner(Piece.EMPTY);
     }
 }
