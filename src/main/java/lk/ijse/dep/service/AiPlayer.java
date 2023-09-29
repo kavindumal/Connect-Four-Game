@@ -21,13 +21,12 @@ public class AiPlayer extends Player{
         BoardUI boardUI = board.getBoardUI();
         boardUI.update(col,false);
         Winner winner = board.findWinner();
-        if (winner.getCol1() == -1){
-            boolean b = board.existLegelMoves();
-            if (!b){
-                boardUI.notifyWinner(new Winner(Piece.EMPTY));
-            } else return;
-        } else {
-            boardUI.notifyWinner(winner);
+        if (winner.getWinningPiece()!=Piece.EMPTY){
+            board.getBoardUI().notifyWinner(winner);
+        }else {
+            if (!board.existLegelMoves()){
+                board.getBoardUI().notifyWinner(new Winner(Piece.EMPTY));
+            }
         }
     }
 }

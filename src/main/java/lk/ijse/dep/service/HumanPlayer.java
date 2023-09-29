@@ -15,13 +15,12 @@ public class HumanPlayer extends Player{
             boardUI.update(col,true);
             board = new BoardImpl(boardUI);
             Winner winner = board.findWinner();
-            if (winner.getCol1() == -1){
-                boolean b = board.existLegelMoves();
-                if (!b){
-                    boardUI.notifyWinner(new Winner(Piece.EMPTY));
-                } else return;
-            } else {
-                boardUI.notifyWinner(winner);
+            if (winner.getWinningPiece()!=Piece.EMPTY){
+                board.getBoardUI().notifyWinner(winner);
+            }else {
+                if (!board.existLegelMoves()){
+                    board.getBoardUI().notifyWinner(new Winner(Piece.EMPTY));
+                }
             }
         }
     }
