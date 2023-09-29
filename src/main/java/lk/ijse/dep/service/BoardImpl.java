@@ -20,7 +20,7 @@ public class BoardImpl implements Board {
 
     @Override
     public BoardUI getBoardUI() {
-        return boardUI;
+        return this.boardUI;
     }
 
     @Override
@@ -46,16 +46,61 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean existLegelMoves() {
-        return false;
+        boolean b = false;
+        for (int i = 0; i < pieces.length ; i++) {
+            for (int j = 0; j < pieces[i].length; j++) {
+                if (pieces[i][j].equals(Piece.EMPTY)){
+                    b = true;
+                }
+            }
+        }
+        return b;
     }
 
     @Override
     public void updateMove(int col, Piece move) {
-
+        for (int i = 0; i < pieces[i].length; i++) {
+            if (pieces[col][i].equals(Piece.EMPTY)){
+                pieces[col][i] = move;
+            }
+        }
     }
 
     @Override
     public Winner findWinner() {
-        return null;
+        Piece winningPiece = Piece.EMPTY;
+        int col1 = -1;
+        int row1 = -1;
+        int col2 = -1;
+        int row2 = -1;
+
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces[i].length - 3; j++) {
+                Piece currentPiece = pieces[i][j];
+                if (currentPiece.equals(pieces[i][j + 1]) && currentPiece.equals(pieces[i][j + 2]) && currentPiece.equals(pieces[i][j + 3])) {
+                    winningPiece = currentPiece;
+                    col1 = i;
+                    row1 = j;
+                    col2 = i;
+                    row2 = j + 3;
+                }
+            }
+        }
+
+
+        for (int i = 0; i < pieces[i].length; i++) {
+            for (int j = 0; j < pieces.length; j++) {
+                Piece currentPiece = pieces[j][i];
+                if (currentPiece.equals(pieces[j + 1][i]) && currentPiece.equals(pieces[j + 2][i]) && currentPiece.equals(pieces[j + 3][i])) {
+                    winningPiece = currentPiece;
+                    col1 = j;
+                    row1 = i;
+                    col2 = j + 3;
+                    row2 = i;
+                }
+            }
+        }
+
+        return new Winner(winningPiece, col1, row1, col2, row2);
     }
 }
