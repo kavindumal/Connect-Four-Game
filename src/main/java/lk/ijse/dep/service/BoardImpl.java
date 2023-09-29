@@ -1,16 +1,18 @@
 package lk.ijse.dep.service;
 
 public class BoardImpl implements Board {
-    private Piece[][] pieces;
+    private final Piece[][] pieces;
 
-    private BoardUI boardUI;
+    private final BoardUI boardUI;
 
+    Piece winningPiece = Piece.EMPTY;
+    int col1,col2,row1,row2;
     public BoardImpl(BoardUI boardUI) {
         pieces = new Piece[NUM_OF_COLS][NUM_OF_ROWS];
         this.boardUI = boardUI;
 
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0 ; j < pieces[i].length; j++) {
+        for (int i = 0; i < NUM_OF_COLS; i++) {
+            for (int j = 0 ; j < NUM_OF_ROWS; j++) {
                 pieces[i][j] = Piece.EMPTY;
             }
         }
@@ -18,15 +20,16 @@ public class BoardImpl implements Board {
 
     @Override
     public BoardUI getBoardUI() {
-        return this.boardUI;
+        return boardUI;
     }
 
     @Override
     public int findNextAvailableSpot(int col) {
         int returnValue = -1;
-        for (int i = 0; i < pieces[i].length; i++) {
-            if (pieces[col][i].equals(Piece.EMPTY)){
+        for (int i = 0; i < NUM_OF_ROWS ; i++) {
+            if (pieces[col][i] == Piece.EMPTY){
                 returnValue = i;
+                break;
             }
         }
         return returnValue;
@@ -34,21 +37,18 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean isLegelMove(int col) {
-        boolean b = true;
         int returnValue = findNextAvailableSpot(col);
-        if (returnValue == -1) {
-            b = false;
-        }
-        return b;
+        return returnValue != (-1);
     }
 
     @Override
     public boolean existLegelMoves() {
         boolean b = false;
-        for (int i = 0; i < pieces.length ; i++) {
-            for (int j = 0; j < pieces[i].length; j++) {
-                if (pieces[i][j].equals(Piece.EMPTY)){
+        for (int i = 0; i < NUM_OF_COLS ; i++) {
+            for (int j = 0; j < NUM_OF_ROWS; j++) {
+                if (pieces[i][j] == Piece.EMPTY){
                     b = true;
+                    break;
                 }
             }
         }
@@ -57,9 +57,10 @@ public class BoardImpl implements Board {
 
     @Override
     public void updateMove(int col, Piece move) {
-        for (int i = 0; i < pieces[i].length; i++) {
-            if (pieces[col][i].equals(Piece.EMPTY)){
+        for (int i = 0; i < NUM_OF_ROWS; i++) {
+            if (pieces[col][i] == Piece.EMPTY){
                 pieces[col][i] = move;
+                break;
             }
         }
     }
@@ -67,34 +68,36 @@ public class BoardImpl implements Board {
     @Override
     public Winner findWinner() {
         Piece winningPiece = Piece.EMPTY;
-        int col1 = -1;
-        int row1 = -1;
-        int col2 = -1;
-        int row2 = -1;
 
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces[i].length - 3; j++) {
-                Piece currentPiece = pieces[i][j];
-                if (currentPiece.equals(pieces[i][j + 1]) & currentPiece.equals(pieces[i][j + 2]) & currentPiece.equals(pieces[i][j + 3])) {
-                    winningPiece = currentPiece;
-                    col1 = i;
-                    row1 = j;
-                    col2 = i;
-                    row2 = j + 3;
+        for (int i = 0; i < NUM_OF_COLS; i++) {
+            for (int j = 0; j < 2; j++) {
+                if (pieces[i][j] == pieces[i][j + 1] && pieces[i][j + 1] == pieces[i][j + 2] && pieces[i][j + 2] == pieces[i][j + 3]) {
+                    if (pieces[i][j] != Piece.EMPTY) {
+                        System.out.println(i + " " + j);
+                        winningPiece = pieces[i][j];
+                        col1 = i;
+                        row1 = j;
+                        col2 = i;
+                        row2 = j + 3;
+                        break;
+                    }
                 }
             }
         }
 
 
-        for (int i = 0; i < pieces[i].length; i++) {
-            for (int j = 0; j < pieces.length - 3; j++) {
-                Piece currentPiece = pieces[j][i];
-                if (currentPiece.equals(pieces[j + 1][i]) & currentPiece.equals(pieces[j + 2][i]) & currentPiece.equals(pieces[j + 3][i])) {
-                    winningPiece = currentPiece;
-                    col1 = j;
-                    row1 = i;
-                    col2 = j + 3;
-                    row2 = i;
+        for (int i = 0; i < NUM_OF_ROWS; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (pieces[j][i] == pieces[j + 1][i] && pieces[j + 1][i] == pieces[j + 2][i] && pieces[j + 2][i] == pieces[j + 3][i]) {
+                    if (pieces[j][i] != Piece.EMPTY) {
+                        System.out.println("paka22");
+                        winningPiece = pieces[j][i];
+                        col1 = j;
+                        row1 = i;
+                        col2 = j + 3;
+                        row2 = i;
+                        break;
+                    }
                 }
             }
         }

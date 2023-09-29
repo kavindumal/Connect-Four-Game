@@ -20,6 +20,7 @@ public class AiPlayer extends Player{
         board.updateMove(col, Piece.GREEN);
         BoardUI boardUI = board.getBoardUI();
         boardUI.update(col,false);
+        board = new BoardImpl(boardUI);
         Winner winner = board.findWinner();
         if (winner.getWinningPiece()!=Piece.EMPTY){
             board.getBoardUI().notifyWinner(winner);
