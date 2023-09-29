@@ -75,7 +75,7 @@ public class BoardImpl implements Board {
         for (int i = 0; i < pieces.length; i++) {
             for (int j = 0; j < pieces[i].length - 3; j++) {
                 Piece currentPiece = pieces[i][j];
-                if (currentPiece.equals(pieces[i][j + 1]) && currentPiece.equals(pieces[i][j + 2]) && currentPiece.equals(pieces[i][j + 3])) {
+                if (currentPiece.equals(pieces[i][j + 1]) & currentPiece.equals(pieces[i][j + 2]) & currentPiece.equals(pieces[i][j + 3])) {
                     winningPiece = currentPiece;
                     col1 = i;
                     row1 = j;
@@ -89,7 +89,7 @@ public class BoardImpl implements Board {
         for (int i = 0; i < pieces[i].length; i++) {
             for (int j = 0; j < pieces.length - 3; j++) {
                 Piece currentPiece = pieces[j][i];
-                if (currentPiece.equals(pieces[j + 1][i]) && currentPiece.equals(pieces[j + 2][i]) && currentPiece.equals(pieces[j + 3][i])) {
+                if (currentPiece.equals(pieces[j + 1][i]) & currentPiece.equals(pieces[j + 2][i]) & currentPiece.equals(pieces[j + 3][i])) {
                     winningPiece = currentPiece;
                     col1 = j;
                     row1 = i;
