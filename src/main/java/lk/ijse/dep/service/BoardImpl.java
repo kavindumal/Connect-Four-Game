@@ -25,12 +25,23 @@ public class BoardImpl implements Board {
 
     @Override
     public int findNextAvailableSpot(int col) {
-        return 0;
+        int returnValue = -1;
+        for (int i = 0; i < pieces[i].length; i++) {
+            if (pieces[col][i].equals(Piece.EMPTY)){
+                returnValue = i;
+            }
+        }
+        return returnValue;
     }
 
     @Override
     public boolean isLegelMove(int col) {
-        return false;
+        boolean b = true;
+        int returnValue = findNextAvailableSpot(col);
+        if (returnValue == -1) {
+            b = false;
+        }
+        return b;
     }
 
     @Override
