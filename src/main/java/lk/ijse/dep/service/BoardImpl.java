@@ -73,7 +73,6 @@ public class BoardImpl implements Board {
             for (int j = 0; j < NUM_OF_ROWS - 3; j++) {
                 if (pieces[i][j] == pieces[i][j + 1] && pieces[i][j + 1] == pieces[i][j + 2] && pieces[i][j + 2] == pieces[i][j + 3]) {
                     if (pieces[i][j] != Piece.EMPTY) {
-                        System.out.println(i + " " + j);
                         winningPiece = pieces[i][j];
                         col1 = i;
                         row1 = j;
@@ -90,7 +89,6 @@ public class BoardImpl implements Board {
             for (int j = 0; j < NUM_OF_COLS - 3; j++) {
                 if (pieces[j][i] == pieces[j + 1][i] && pieces[j + 1][i] == pieces[j + 2][i] && pieces[j + 2][i] == pieces[j + 3][i]) {
                     if (pieces[j][i] != Piece.EMPTY) {
-                        System.out.println("paka22");
                         winningPiece = pieces[j][i];
                         col1 = j;
                         row1 = i;

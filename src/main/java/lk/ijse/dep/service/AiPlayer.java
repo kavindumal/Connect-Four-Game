@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Random;
 
 public class AiPlayer extends Player{
+    boolean trueOrFalse;
+    Winner winner;
     Random random = new Random();
     public AiPlayer(Board board) {
         super(board);
@@ -18,11 +20,14 @@ public class AiPlayer extends Player{
             } else continue;
         }while (true);
         board.updateMove(col, Piece.GREEN);
-        BoardUI boardUI = board.getBoardUI();
-        boardUI.update(col,false);
-        board = new BoardImpl(boardUI);
-        Winner winner = board.findWinner();
-        if (winner.getWinningPiece()!=Piece.EMPTY){
+        board.getBoardUI().update(col,trueOrFalse);
+        winner = board.findWinner();
+//
+//        BoardUI boardUI = board.getBoardUI();
+//        boardUI.update(col,false);
+//        board = new BoardImpl(boardUI);
+//        Winner winner = board.findWinner();
+        if (winner.getWinningPiece() != Piece.EMPTY){
             board.getBoardUI().notifyWinner(winner);
         }else {
             if (!board.existLegelMoves()){

@@ -11,9 +11,7 @@ public class HumanPlayer extends Player{
         legelMove = board.isLegelMove(col);
         if (legelMove){
             board.updateMove(col,Piece.BLUE);
-            BoardUI boardUI = board.getBoardUI();
-            boardUI.update(col,true);
-            board = new BoardImpl(boardUI);
+            board.getBoardUI().update(col,legelMove);
             Winner winner = board.findWinner();
             if (winner.getWinningPiece() != Piece.EMPTY){
                 board.getBoardUI().notifyWinner(winner);
