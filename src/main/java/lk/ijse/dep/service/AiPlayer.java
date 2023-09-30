@@ -1,6 +1,5 @@
 package lk.ijse.dep.service;
 
-import java.util.Map;
 import java.util.Random;
 
 public class AiPlayer extends Player{
@@ -22,11 +21,6 @@ public class AiPlayer extends Player{
         board.updateMove(col, Piece.GREEN);
         board.getBoardUI().update(col,trueOrFalse);
         winner = board.findWinner();
-//
-//        BoardUI boardUI = board.getBoardUI();
-//        boardUI.update(col,false);
-//        board = new BoardImpl(boardUI);
-//        Winner winner = board.findWinner();
         if (winner.getWinningPiece() != Piece.EMPTY){
             board.getBoardUI().notifyWinner(winner);
         }else {

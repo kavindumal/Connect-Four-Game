@@ -12,5 +12,7 @@ public interface Board {
     public boolean existLegelMoves();
 
     public void updateMove(int col, Piece move);
+    public void updateMove(int col, int row, Piece move);
+
     public Winner findWinner();
 }
