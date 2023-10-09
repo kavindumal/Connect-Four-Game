@@ -8,7 +8,7 @@ public class HumanPlayer extends Player{
 
     @Override
     public void movePiece(int col){
-        legelMove = board.isLegelMove(col);
+        legelMove = board.isLegalMove(col);
         if (legelMove){
             board.updateMove(col,Piece.BLUE);
             board.getBoardUI().update(col,legelMove);
@@ -16,7 +16,7 @@ public class HumanPlayer extends Player{
             if (winner.getWinningPiece() != Piece.EMPTY){
                 board.getBoardUI().notifyWinner(winner);
             }else {
-                if (!board.existLegelMoves()){
+                if (!board.existLegalMoves()){
                     board.getBoardUI().notifyWinner(new Winner(Piece.EMPTY));
                 }
             }
