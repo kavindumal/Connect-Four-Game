@@ -75,12 +75,7 @@ public class BoardImpl implements Board {
         int row = findNextAvailableSpot(selectedMove);
 
         if (row != -1) {
-            // Update the game board with the player's move
-            pieces[selectedMove][row] = Piece.GREEN; // Assuming currentPlayer is a variable representing the current player (Piece.GREEN or Piece.BLUE)
-            // You might also need to update currentPlayer to switch players if necessary
-
-            // Additional logic for your game rules if needed
-            // For example, check for a win or draw condition here
+            pieces[selectedMove][row] = Piece.GREEN;
         }
     }
 
