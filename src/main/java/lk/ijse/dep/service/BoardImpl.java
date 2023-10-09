@@ -1,7 +1,6 @@
 package lk.ijse.dep.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BoardImpl implements Board {
@@ -16,21 +15,20 @@ public class BoardImpl implements Board {
 
     public BoardImpl(BoardUI boardUI) {
         this.boardUI = boardUI;
-        this.pieces=new Piece[6][5];
+        this.pieces = new Piece[6][5];
 
-        //initialize all the pieces
         for (int i = 0; i < pieces.length; i++) {
             for (int j = 0; j < pieces[i].length; j++) {
-                pieces[i][j]=Piece.EMPTY;
+                pieces[i][j] = Piece.EMPTY;
             }
         }
     }
 
     public BoardImpl(Piece[][] pieces, BoardUI boardUI) {
-        this.pieces=new Piece[6][5];
+        this.pieces = new Piece[6][5];
         for (int i = 0; i < pieces.length; i++) {
             for (int j = 0; j < pieces[i].length; j++) {
-                this.pieces[i][j]=pieces[i][j];
+                this.pieces[i][j] = pieces[i][j];
             }
         }
         this.boardUI = boardUI;
@@ -46,7 +44,7 @@ public class BoardImpl implements Board {
     @Override
     public int findNextAvailableSpot(int col) {
         for (int i = 0; i < pieces[col].length; i++) {
-            if (pieces[col][i]==Piece.EMPTY){
+            if (pieces[col][i] == Piece.EMPTY){
                 return i;
             }
         }
@@ -55,7 +53,7 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean isLegalMove(int col) {
-        int index=findNextAvailableSpot(col);
+        int index = findNextAvailableSpot(col);
         return index != -1;
     }
 
@@ -71,10 +69,10 @@ public class BoardImpl implements Board {
 
     @Override
     public void updateMove(int col, Piece move) {
-        this.cols=col;
-        this.piece=move;
-        int index=findNextAvailableSpot(col);
-        pieces[col][index]=move;
+        this.cols = col;
+        this.piece = move;
+        int index = findNextAvailableSpot(col);
+        pieces[col][index] = move;
     }
 
     @Override
@@ -84,46 +82,40 @@ public class BoardImpl implements Board {
 
     @Override
     public Winner findWinner() {
-
-        int count=0;
-
-        //Vertically
-
+        //horizontalli check krnwa
+        int count = 0;
         for (int i = 0; i < pieces.length; i++){
             for (int j = 0; j < pieces[i].length-1; j++){
-                if (pieces[i][j]==pieces[i][j+1]){
+                if (pieces[i][j] == pieces[i][j+1]){
                     count++;
-                    if (count==3 && pieces[i][j]!=Piece.EMPTY){
-                        return new Winner(pieces[i][j],i,(j-2),i,(j+1));
+                    if (count == 3 && pieces[i][j] != Piece.EMPTY){
+                        return new Winner(pieces[i][j], i, (j-2), i, (j+1));
                     }
                 }
                 else{
-                    count=0;
+                    count = 0;
                 }
             }
-            count=0;
+            count = 0;
         }
 
-        count=0;
-
-        //Horizontally
-
+        //vertically check krnwa
+        count = 0;
         for (int i = 0; i < pieces[0].length; i++){
             for (int j = 0; j < pieces.length-1; j++){
-                if (pieces[j][i]==pieces[j+1][i]){
+                if (pieces[j][i] == pieces[j+1][i]){
                     count++;
-                    if (count==3 && pieces[j][i]!=Piece.EMPTY){
-                        return  new Winner(pieces[j][i],(j-2),i,(j+1),i);
+                    if (count == 3 && pieces[j][i] != Piece.EMPTY){
+                        return  new Winner(pieces[j][i], (j-2), i, (j+1), i);
                     }
                 }
                 else{
-                    count=0;
+                    count = 0;
                 }
             }
-            count=0;
+            count = 0;
         }
         return new Winner(Piece.EMPTY);
-
     }
 
     @Override
@@ -133,10 +125,9 @@ public class BoardImpl implements Board {
 
 
     public List<BoardImpl> getAllLegalNextMoves() {
-
         Piece nextPiece = piece == Piece.BLUE ? Piece.GREEN : Piece.BLUE;
-
         List<BoardImpl> nextMoves = new ArrayList<>();
+
         for (int i = 0; i < 6; i++) {
             int raw = findNextAvailableSpot(i);
             if (raw != -1){
@@ -144,22 +135,17 @@ public class BoardImpl implements Board {
                 legalMove.updateMove(i,nextPiece);
                 nextMoves.add(legalMove);
             }
-
         }
-
         return  nextMoves;
     }
 
     public BoardImpl getRandomLeagalNextMove() {
-        final List<BoardImpl> legalMoves=getAllLegalNextMoves();
-
+        final List<BoardImpl> legalMoves = getAllLegalNextMoves();
         if (legalMoves.isEmpty()) {
             return null;
         }
-
-        final int random= RANDOM_GENERATOR.nextInt(legalMoves.size());
+        final int random = RANDOM_GENERATOR.nextInt(legalMoves.size());
         return legalMoves.get(random);
-
     }
 
 
@@ -168,10 +154,10 @@ public class BoardImpl implements Board {
             return false;
         }
 
-        Winner winner=findWinner();
-        if (winner.getWinningPiece()!=Piece.EMPTY){
-            return false;
+        Winner winner = findWinner();
 
+        if (winner.getWinningPiece() != Piece.EMPTY){
+            return false;
         }
         return true;
     }

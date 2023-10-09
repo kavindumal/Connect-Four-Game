@@ -15,7 +15,9 @@ public class AiPlayer extends Player {
     @Override
     public void movePiece(int col) {
         Mcts mcts = new Mcts(board.getBoardImpl());
+
         col = mcts.startMCTS();
+
         board.updateMove(col,Piece.GREEN);
         board.getBoardUI().update(col,false);
         Winner winner = board.findWinner();
@@ -138,6 +140,7 @@ public class AiPlayer extends Player {
         void addChild(Node node) {
             children.add(node);
         }
+
     }
 
     static class UCT {
@@ -154,4 +157,5 @@ public class AiPlayer extends Player {
             return Collections.max(node.children, Comparator.comparing(c -> uctValue(parentVisit, c.score, c.visits)));
         }
     }
+
 }
