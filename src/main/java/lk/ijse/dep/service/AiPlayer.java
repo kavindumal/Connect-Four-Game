@@ -1,7 +1,6 @@
 package lk.ijse.dep.service;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class AiPlayer extends Player {
     boolean trueOrFalse;
@@ -39,20 +38,23 @@ public class AiPlayer extends Player {
             this.board = board;
         }
 
-        public int startMCTS(){
+        public int startMCTS() {
             int count = 0;
             Node tree = new Node(board);
 
-            while (count < 4000){
+            while (count < 4000) {
                 count++;
                 Node promisingNode = selectPromisingNode(tree);
                 Node selected = promisingNode;
-                if (selected.board.getStatus()){
+
+                if (selected.board.getStatus()) {
                     selected = expandNodeAndReturnRandom(promisingNode);
                 }
+
                 Piece resultPiece = simulateLightPlayout(selected);
-                backPropagation(resultPiece,selected);
+                backPropagation(resultPiece, selected);
             }
+
             Node best = tree.getChildWithMaxScore();
             return best.board.cols;
         }
