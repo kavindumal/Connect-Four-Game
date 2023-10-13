@@ -44,18 +44,18 @@ public class AiPlayer extends Player {
 
             while (count < 4000) {
                 count++;
-                Node promisingNode = selectPromisingNode(tree);
+                Node promisingNode = selectPromisingN(tree);
                 Node selected = promisingNode;
 
                 if (selected.board.getStatus()) {
-                    selected = expandNodeAndReturnRandom(promisingNode);
+                    selected = expandNodeAndReturnRanNum(promisingNode);
                 }
 
                 Piece resultPiece = simulateLightPlayout(selected);
                 backPropagation(resultPiece, selected);
             }
 
-            Node best = tree.getChildWithMaxScore();
+            Node best = tree.getMaxScoreChild();
             return best.board.cols;
         }
 
@@ -85,13 +85,13 @@ public class AiPlayer extends Player {
                 BoardImpl nextMove = node.board.getRandomLeagalNextMove();
                 Node child = new Node(nextMove);
                 child.parent = node;
-                node.addChild(child);
+                node.addNewChild(child);
                 node = child;
             }
             return node.board.findWinner().getWinningPiece();
         }
 
-        private Node expandNodeAndReturnRandom(Node node) {
+        private Node expandNodeAndReturnRanNum(Node node) {
             Node result = node;
             BoardImpl board = node.board;
             List<BoardImpl> legalMoves = board.getAllLegalNextMoves();
@@ -100,14 +100,14 @@ public class AiPlayer extends Player {
                 BoardImpl move = legalMoves.get(i);
                 Node child = new Node(move);
                 child.parent = node;
-                node.addChild(child);
+                node.addNewChild(child);
                 result = child;
             }
             int random = Board.RANDOM_GENERATOR.nextInt(node.children.size());
             return node.children.get(random);
         }
 
-        private Node selectPromisingNode(Node tree) {
+        private Node selectPromisingN(Node tree) {
             Node node = tree;
             while (node.children.size() != 0){
                 node = UCT.findBestNodeWithUCT(node);
@@ -130,7 +130,7 @@ public class AiPlayer extends Player {
         public Node(BoardImpl board) {
             this.board = board;
         }
-        Node getChildWithMaxScore() {
+        Node getMaxScoreChild() {
             Node result = children.get(0);
             for (int i = 1; i < children.size(); i++) {
                 if (children.get(i).score > result.score) {
@@ -139,14 +139,14 @@ public class AiPlayer extends Player {
             }
             return result;
         }
-        void addChild(Node node) {
+        void addNewChild(Node node) {
             children.add(node);
         }
 
     }
 
     static class UCT {
-        public static double uctValue(
+        public static double findUCTValue(
                 int totalVisit, double nodeWinScore, int nodeVisit) {
             if (nodeVisit == 0) {
                 return Integer.MAX_VALUE;
@@ -156,7 +156,7 @@ public class AiPlayer extends Player {
 
         public static Node findBestNodeWithUCT(Node node) {
             int parentVisit = node.visits;
-            return Collections.max(node.children, Comparator.comparing(c -> uctValue(parentVisit, c.score, c.visits)));
+            return Collections.max(node.children, Comparator.comparing(c -> findUCTValue(parentVisit, c.score, c.visits)));
         }
     }
 
